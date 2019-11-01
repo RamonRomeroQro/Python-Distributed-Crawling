@@ -1,5 +1,4 @@
-import json, socket, pickle, struct
-
+import json, socket, pickle
 with open('./settings.json') as f:
   settings = json.load(f)
 
@@ -19,4 +18,3 @@ for j,pair in enumerate(SLAVE_SOCKETS):
         s.connect(pair)
         data=pickle.dumps(send_list[j])
         s.sendall(data)
-

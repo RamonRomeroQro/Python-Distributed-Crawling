@@ -12,7 +12,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     with conn:
         print('Connected by', addr)
         while True:
-            data = conn.recv(4)
+            data = conn.recv(1024)
             
             data_arr = pickle.loads(data)
             print ('Received', repr(data_arr))
