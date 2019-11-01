@@ -1,29 +1,22 @@
-#!/usr/bin/env python3
+import json, socket, pickle, struct
 
-import socket
-from collections import deque
+with open('./settings.json') as f:
+  settings = json.load(f)
 
-HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-PORT = 7000       # Port to listen on (non-privileged ports are > 1023)
-LIMIT = 3
+NUM_SLAVES = len(settings['slaves'])
+SLAVE_SOCKETS=[(s['ip'], s['port']) for s in settings['slaves']]
+MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
+MASTER_PORT = settings['master']['port']        # The port used by the server
 
-q=deque(['s','3'])
+retrived_list=['a'*x for x in range(1,10)]
+send_list=[[] for x in range(NUM_SLAVES)]
 
-s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((HOST, PORT))
-level=1
-while True:
-    while True:
-        s.listen()
-        aux=len(q)
-        i=0
-        while i<len(aux):
-            conn, addr = s.accept()
-            with conn:
-                conn.sendall(q.pop().encode())
-            i+=1
-            
-    #retrive
-    if not q or level==LIMIT:
-        break
-    level+=1
+for i,v in enumerate(retrived_list):
+    send_list[i%NUM_SLAVES].append(v)
+
+for j,pair in enumerate(SLAVE_SOCKETS):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect(pair)
+        data=pickle.dumps(send_list[j])
+        s.sendall(data)
+
