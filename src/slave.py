@@ -1,20 +1,24 @@
-#!/usr/bin/env python3
+import socket
+import sys
+import pickle
+import struct
 
-import socket, sys
-
-MASTER_HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-MASTER_PORT = 7000        # Port to listen on (non-privileged ports are > 1023)
-
-SLAVE_HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-SLAVE_PORT = int(sys.argv[1] )       # Port to listen on (non-privileged ports are > 1023)
+HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
+# Port to listen on (non-privileged ports are > 1023)
+PORT = int(sys.argv[1])
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((SLAVE_HOST, SLAVE_PORT))
-    s.connect((MASTER_HOST, MASTER_PORT))
-    #s.sendall(b'Hello, world')
-    #data = s.recv(1024)
-
-#print('Received', repr(data))
-
-
-    
+    s.bind((HOST, PORT))
+    s.listen()
+    conn, addr = s.accept()
+    with conn:
+        print('Connected by', addr)
+        while True:
+            buf = b''
+            while len(buf) < 4:
+                buf += conn.recv(4 - len(buf))
+            length = struct.unpack('!I', buf)[0]
+            data = conn.recv(length)
+            data_arr = pickle.loads(data)
+            print('Received', repr(data_arr))
+            break

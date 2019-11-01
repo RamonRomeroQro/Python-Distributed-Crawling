@@ -1,4 +1,5 @@
+import json
 
-import sys
-
-print(sys.argv[1])
+r = {set('2'), set('22')}
+r = json.dumps(r)
+print(r)
