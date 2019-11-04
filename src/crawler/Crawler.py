@@ -1,34 +1,46 @@
+from bs4 import BeautifulSoup
+from collections import deque
 import requests
-import re
+# import re
 
 class Crawler:
     def __init__(self, n_url):
         self.url=n_url
-        self.images = set()
-        self.links = set()
-
-    def split(self, clients):
-        pass
-
-    def crawl_img(self):
         r = requests.get(self.url)
-        for img in re.findall(r'<img.*?>', r.text):
-            if '.gif' not in img: # simple filters
-                self.images.add(img)
+        self.soup = BeautifulSoup(r.text, features="html.parser")
+    
+    def beautiful(self):
+        return self.soup.prettify()
+    def bfs(self):
+        queue = deque([self.soup]) # queue of (path, element) pairs
+        while queue:
+            element = queue.popleft()
+            print(str(element.string) if element.string else type(element))
+            if hasattr(element, 'children'):  # check for leaf elements
+                for child in element.children:
+                    queue.append(child)
+            # do stuff
+            
 
-        print("\n".join(list(self.images)))
+print(Crawler("http://yann.lecun.com/").bfs())
 
-    def crawl_links(self):
-        r = requests.get(self.url)
-        for link in re.findall(r'<a.*>.*</a>', r.text):
-            if 'href' in link:
-                self.links.add(link)
+    # def split(self, clients):
+    #     pass
 
-        print("\n".join(list(self.links)))
-        # <img src="wrongname.gif" alt="Flowers in Chania"> 
-        # <a href="url">link text</a>
-        
+    # def crawl_img(self):
+    #     r = requests.get(self.url)
+    #     for img in re.findall(r'<img.*?>', r.text):
+    #         if '.gif' not in img: # simple filters
+    #             self.images.add(img)
 
-print(Crawler('http://yann.lecun.com/').crawl_img())
-print(Crawler('http://yann.lecun.com/').crawl_links())
+    #     print("\n".join(list(self.images)))
 
+    # def crawl_links(self):
+    #     r = requests.get(self.url)
+    #     for link in re.findall(r'<a.*>.*</a>', r.text):
+    #         if 'href' in link:
+    #             self.links.add(link)
+
+    #     print("\n".join(list(self.links)))
+    #     # <img src="wrongname.gif" alt="Flowers in Chania"> 
+    #     # <a href="url">link text</a>
