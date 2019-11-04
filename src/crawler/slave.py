@@ -2,7 +2,7 @@ import struct
 import json
 import socket
 import pickle
-with open('./settings.json') as f:
+with open('./../settings.json') as f:
     settings = json.load(f)
 
 NUM_SLAVES = len(settings['slaves'])
