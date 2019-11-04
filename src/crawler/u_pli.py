@@ -7,59 +7,45 @@
 
 from pymongo import MongoClient
 
-def play():
-    client = MongoClient('127.0.0.1', 7050)
-    db_list = client.list_database_names()
-    database=None
-    links_collection=None
-    if "dataset" in db_list:
-        database=client['dataset']
-       
-
-    else:
-        print('created db')
-        database=client['dataset']
-
-    if 'links' not in database.list_collection_names():
-        print('created links')
-        links_collection=database['links']
-        links_collection.create_index("url", unique=True)
-  
-    else:
-        print ('retrived')
-        links_collection=database['links']
-
-    
-    seed_p=open('./seeds.txt', 'r')
-    aux=[]
-    for l in seed_p:
-        l=l.strip()
-        obj={"url":l, "crawled":False}
-        try:
-            links_collection.insert_one(obj)
-        except:
-            pass
-        #aux.append(obj)
-
-    if aux:
-        print('seeds Added')
-        links_collection.insert_many(aux)
-
-
-
-    myquery = { "crawled":False }
-    to_split = list(links_collection.find(myquery))
-    
-    print(type((to_split)))
-    print(((to_split)))
-    CONSTANT=2
-    a=(len(to_split))/CONSTANT
-    for i in range(CONSTANT):
-        if i!= CONSTANT-1:
-            conexion[k].sendall(to_split[(a*i):(a*(i+1))])
+class CrawClient():
+    def __init__(self, ip_v, port_v):    
+        self.client = MongoClient(ip_v, port_v)
+        self.database=None
+        self.links_collection=None
+        if "dataset" in self.client.list_database_names():
+            self.database=self.client['dataset']
+        
         else:
-            conexion[k].sendall(to_split[(a*i):])
+            print('created db')
+            self.database=self.client['dataset']
 
+        if 'links' not in self.database.list_collection_names():
+            print('created links')
+            self.links_collection=self.database['links']
+            self.links_collection.create_index("url", unique=True)
+    
+        else:
+            print ('retrived')
+            self.links_collection=self.database['links']
+    
+    def add_seeds(self, path='./seeds.txt'):
+        seed_p=open(path, 'r')
+        for l in seed_p:
+            l=l.strip()
+            obj={"url":l, "crawled":False}
+            try:
+                self.links_collection.insert_one(obj)
+            except:
+                pass
+        seed_p.close()
+            #aux.append(obj)
+
+    def sed_to_crawl(self, connections_array):
+        myquery = { "crawled":False }
+        to_split = self.client['dataset']['dataset']['links'].find(myquery)
+        # for link in to_split:
+
+    
 
 
 def main():
