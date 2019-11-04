@@ -2,12 +2,17 @@ import struct
 import json
 import socket
 import pickle
-with open('./../settings.json') as f:
-    settings = json.load(f)
+import sys
+from DataManagement import DataManager
+
+f = open('./../settings.json')
+settings = json.load(f)
+f.close()
 
 NUM_SLAVES = len(settings['slaves'])
 MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
 MASTER_PORT = settings['master']['port']        # The port used by the server
+MASTER_DB = settings['master']['db']        # The port used by the server
 
 def main():
 
@@ -18,16 +23,19 @@ def main():
     print("Server is running on " + str(MASTER_PORT))
 
     list_connections = []
-
-    for i in range(NUM_SLAVES):
+    i = 0
+    while i < NUM_SLAVES:
         c, addr = my_socket.accept()
         list_connections.append((c, addr))
+        i += 1
 
-    retrived_list = ['a'*x for x in range(1, 10)]
-    send_list = [[] for x in range(NUM_SLAVES)]
+    db = DataManager(MASTER_HOST, MASTER_DB, NUM_SLAVES)
+    try:
+        db.add_seeds(sys.argv[1])
+    except Exception as e:
+        print(e)
 
-    for i, v in enumerate(retrived_list):
-        send_list[i % NUM_SLAVES].append(v)
+    send_list = db.get_crawlable()
 
     for j, pair in enumerate(list_connections):
         packet = pickle.dumps(send_list[j])
@@ -37,6 +45,7 @@ def main():
 
     my_socket.close()
     return 0
+
 
 if __name__ == "__main__":
     main()
