@@ -14,11 +14,15 @@ class Crawler:
     def bfs(self):
         queue = deque([self.soup]) # queue of (path, element) pairs
         while queue:
-            element = queue.popleft()
-            print(str(element.string) if element.string else type(element))
-            if hasattr(element, 'children'):  # check for leaf elements
-                for child in element.children:
-                    queue.append(child)
+            l=len(queue)
+            lev=[]
+            for i in range(l):
+                element = queue.popleft()
+                lev.append(type(element))
+                if hasattr(element, 'children'):  # check for leaf elements
+                    for child in element.children:
+                        queue.append(child)
+            print(lev)
             # do stuff
             
 
