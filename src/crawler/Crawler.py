@@ -27,6 +27,7 @@ class Crawler:
         print("\n".join(list(self.links)))
         # <img src="wrongname.gif" alt="Flowers in Chania"> 
         # <a href="url">link text</a>
+        
 
 print(Crawler('http://yann.lecun.com/').crawl_img())
 print(Crawler('http://yann.lecun.com/').crawl_links())

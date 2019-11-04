@@ -14,6 +14,7 @@ MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
 MASTER_PORT = settings['master']['port']        # The port used by the server
 MASTER_DB = settings['master']['db']        # The port used by the server
 
+
 def main():
 
     my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

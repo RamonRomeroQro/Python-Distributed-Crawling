@@ -8,7 +8,6 @@ class DataManager():
         '''
         self.client = MongoClient(ip_v, port_v)
         self.split_num = num
-
         self.database = None
         self.links_collection = None
         if "dataset" in self.client.list_database_names():
@@ -47,10 +46,11 @@ class DataManager():
         get matrix of crawlables
 
         '''
+        print('echo')
         myquery = {"crawled": False}
-        to_split = self.client['dataset']['dataset']['links'].find(myquery)
-        # for link in to_split:
+        to_split = self.client['dataset']['links'].find(myquery)
         matrix_sendables = [[] for x in range(self.split_num)]
-        for i, dictionary in enumerate(to_split):
-            matrix_sendables[i % self.split_num].append(dictionary)
+        for index, dictionary in enumerate(to_split):
+            print(index,'>>',dictionary)
+            matrix_sendables[index % self.split_num].append(dictionary)
         return matrix_sendables
