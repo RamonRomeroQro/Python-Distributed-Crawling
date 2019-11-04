@@ -2,7 +2,7 @@
     "master": {
         "ip": "127.0.0.1",
         "port": 7000,
-        "db": 6000,
+        "db": 7050,
         "id": "master"
     },
     "slaves": [
