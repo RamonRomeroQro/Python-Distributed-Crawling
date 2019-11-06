@@ -24,9 +24,12 @@ class Crawler:
                         queue.append(child)
             print(lev)
             # do stuff
+    def get_nodes_to_eval(self, l):
+        return self.soup.find_all(l)
+
             
 
-print(Crawler("http://yann.lecun.com/").bfs())
+print(Crawler("http://yann.lecun.com/").get_nodes_to_eval(['img']))
 
     # def split(self, clients):
     #     pass
