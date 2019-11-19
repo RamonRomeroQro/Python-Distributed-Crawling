@@ -3,6 +3,7 @@
 .vscode/
 ./.vscode
 .DS_Store
+src/crawler/images/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
