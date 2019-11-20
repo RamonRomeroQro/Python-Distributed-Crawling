@@ -5,13 +5,12 @@ def generate_html(list_tuples, dataset):
     current=0
     indexing=1
     while indexing<len(list_tuples):
-        nf=open(list_tuples[current][0], 'w')
+        if current==0:
+            nf=open('index.html', 'w')
+        else:  
+            nf=open(list_tuples[current][0], 'w')
         info=dataset[list_tuples[current][1]]
-        block=[]
-        for k,v in info:
-            s=f"{k} : {v}"
-            block.append(s)
-        block="<br>".join(block)
+        block=info
         links=[]
         c=0
         while indexing<len(list_tuples):
@@ -24,7 +23,7 @@ def generate_html(list_tuples, dataset):
         for t in links:
             s=f'<a href="{t[0]}"> {t[1]} </a>'
             links_html.append(s)
-        links_html="".join(links_html)
+        links_html="<br>".join(links_html)
 
         my_html=f"""
         <!doctype html>
@@ -37,9 +36,9 @@ def generate_html(list_tuples, dataset):
             {
                 block
             }
-
+            <br>
              <img src="{list_tuples[current][2]}"  height="100" > 
-            
+            <br>
             </div>
             <div>
             {
@@ -49,7 +48,10 @@ def generate_html(list_tuples, dataset):
         </body>
         </html>
         """
-        print(my_html)
+        my_html.encode('utf-8')
+        nf.write(my_html)
+        nf.close()
+
 
         current+=1
 
@@ -83,11 +85,12 @@ def main():
         if index==0:
             classes=line.strip().split(',')
         else:
-            data=line.strip().split(',')
-            d_element={}
-            for i,c in enumerate(classes):
-                d_element[c]=data[i]
-            rows["_".join(data[1].split(' '))]=d_element
+            data=line.strip()
+            
+            l=data.find(',')+1
+            r=data[l:].find(',')
+            name=data[l:r+l]
+            rows["_".join(name.split(' '))]=data[l:]
     f.close()
     generate_html(all_names_html, rows)
     # a=list(sorted(rows.keys()))
