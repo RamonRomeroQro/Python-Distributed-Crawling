@@ -2,13 +2,18 @@ import struct
 import json
 import socket
 import pickle
+import sys
+from Crawler import Crawler
 with open('./../settings.json') as f:
     settings = json.load(f)
 
+ID = sys.argv[1]
 NUM_SLAVES = len(settings['slaves'])
 SLAVE_SOCKETS = [(s['ip'], s['port']) for s in settings['slaves']]
 MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
 MASTER_PORT = settings['master']['port']        # The port used by the server
+KWORDS = set(settings['kwords'])
+SEEDS = set(settings['seeds'])
 
 
 def connect():
@@ -24,7 +29,12 @@ def connect():
             break
 
         for i in data_arr:
+
             print('crawling', i)
+            crawler_instance = Crawler(i, KWORDS, ID)
+            crawler_instance.inspect_images()
+            crawler_instance.inspect_urls()
+            crawler_instance.update_current()
 
 
 def main():

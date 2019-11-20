@@ -26,19 +26,18 @@ class DataManager():
             print('retrived')
             self.links_collection = self.database['links']
 
-    def add_seeds(self, path='./seeds.txt'):
+    def add_seeds(self, seeds):
         '''
         Add seed from txt file
         '''
-        seed_p = open(path, 'r')
-        for l in seed_p:
+        for l in seeds:
             l = l.strip()
             obj = {"url": l, "crawled": False}
             try:
                 self.links_collection.insert_one(obj)
-            except:
+            except Exception as e:
+                print(e)
                 pass
-        seed_p.close()
         # aux.append(obj)
 
     def get_crawlable(self):
@@ -51,6 +50,6 @@ class DataManager():
         to_split = self.client['dataset']['links'].find(myquery)
         matrix_sendables = [[] for x in range(self.split_num)]
         for index, dictionary in enumerate(to_split):
-            print(index,'>>',dictionary)
+            print(index, '>>', dictionary)
             matrix_sendables[index % self.split_num].append(dictionary)
         return matrix_sendables
