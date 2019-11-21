@@ -31,6 +31,7 @@ def connect():
                 d_url = pickle.loads(data)
                 break
 
+
             print(d_url)
 
 
