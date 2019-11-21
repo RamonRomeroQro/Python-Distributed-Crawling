@@ -26,7 +26,7 @@ def generate_html(list_tuples, dataset):
                 break
         links_html = []
         for t in links:
-            s = f'<a href="{t[0]}"> {t[1]} </a>'
+            s = f'<a href="./{t[0]}"> {t[1]} </a>'
             links_html.append(s)
         links_html = "<br>".join(links_html)
 

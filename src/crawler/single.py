@@ -55,8 +55,9 @@ def main():
             try:
                 altern = str(image['alt']).lower()
             except:
-                altern = None
+                altern = [None]
             for kw in KWORDS:
+                #print('>>>', kw, arround , filename , altern)
                 if kw in arround or kw in filename or kw in altern:
                     final_tags.append(kw)
             if final_tags:
@@ -88,8 +89,14 @@ def main():
             else:
                 a.add(element)
 
+        print('AAA>>', a)
+        print('AAA>>', base)
+
         for u in a:
             if u not in visited:
                 print("Inserted "+ u)
                 q.append(u)
-            
+
+
+if __name__ == "__main__":
+    main()
