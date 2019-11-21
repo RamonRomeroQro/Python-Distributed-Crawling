@@ -42,7 +42,7 @@ def main():
         print("seeds duplicadas, continuando amplitud")
 
     # while crawlables
-    client = MongoClient(MASTER_HOST, MASTER_DB)
+    client = db.client
     database = client['dataset']
     links_collection = database['links']
 
@@ -64,9 +64,6 @@ def main():
             for e in l:
                 flat.append(e['url'])
 
-        client = MongoClient(MASTER_HOST, MASTER_DB)
-        database = client['dataset']
-        links_collection = database['links']
         # traverse level
         print("newLevel")
         while True:
@@ -80,6 +77,7 @@ def main():
             if c == len(flat):
                 break
         my_socket.close()
+        client.close()
     return 0
 
 

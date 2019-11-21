@@ -39,6 +39,7 @@ def connect():
                 crawler_instance.inspect_images()
                 crawler_instance.inspect_urls()
                 crawler_instance.update_current()
+                crawler_instance.client.close()
 
 
 def main():
