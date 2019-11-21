@@ -15,14 +15,12 @@ MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
 MASTER_PORT = settings['master']['port']        # The port used by the server
 MASTER_DB = settings['master']['db']        # The port used by the server
 KWORDS = set(settings['kwords'])
-print('>>', KWORDS)
 SEEDS = set(settings['seeds'])
 
 
 class Crawler:
     def __init__(self, dict_db, kwords_v, id_v):
         self.dict_v = dict_db
-
         self.url = self.dict_v['url']
         self.id = id_v
         self.base = self.url[:self.g_base()]

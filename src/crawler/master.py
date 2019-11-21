@@ -48,6 +48,7 @@ def main():
 
 
     while links_collection.count_documents({ 'crawled': False }, limit = 1):
+        print('crawl')
 
         send_list = db.get_crawlable()
 
