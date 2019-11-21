@@ -41,33 +41,43 @@ def main():
     except Exception as e:
         print("seeds duplicadas, continuando amplitud")
 
-    send_list = db.get_crawlable()
-
-    for j, pair in enumerate(list_connections):
-        packet = pickle.dumps(send_list[j])
-        length = struct.pack('!I', len(packet))
-        packet = length + packet
-        pair[0].sendall(packet)
-
-    my_socket.close()
-    flat = []
-    for l in send_list:
-        for e in l:
-            flat.append(e['url'])
-
-    client = MongoClient(MASTER_HOST, MASTER_DB)
+    # while crawlables
+    client = db.client
     database = client['dataset']
     links_collection = database['links']
-    while True:
-        c = 0
-        for x in flat:
-            myquery = {"url": x}
-            r = links_collection.find(myquery)
-            for x in r:
-                if x['crawled'] == True:
-                    c += 1
-        if c == len(flat):
-            break
+
+
+    while links_collection.count_documents({ 'crawled': False }, limit = 1):
+        print('crawl')
+
+        send_list = db.get_crawlable()
+
+    
+        for i, d_element in enumerate(send_list):
+            packet = pickle.dumps(d_element)
+            length = struct.pack('!I', len(packet))
+            packet = length + packet
+            list_connections[i%len(list_connections)][0].sendall(packet)
+
+        #my_socket.close()
+        
+
+        # traverse level
+        while True:
+            c = 0
+            for d_e in send_list:
+
+                myquery = {"url": d_e['url']}
+                r = links_collection.find(myquery)
+                for x in r:
+                    if x['crawled'] == True:
+                        c += 1
+            if c == len(send_list):
+                break
+        print("finshed level")
+
+        my_socket.close()
+        client.close()
     return 0
 
 

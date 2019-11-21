@@ -15,21 +15,20 @@ MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
 MASTER_PORT = settings['master']['port']        # The port used by the server
 MASTER_DB = settings['master']['db']        # The port used by the server
 KWORDS = set(settings['kwords'])
-print('>>', KWORDS)
 SEEDS = set(settings['seeds'])
 
 
 class Crawler:
     def __init__(self, dict_db, kwords_v, id_v):
         self.dict_v = dict_db
-
         self.url = self.dict_v['url']
         self.id = id_v
         self.base = self.url[:self.g_base()]
-
         self.kwords = kwords_v
         r = requests.get(self.url)
         self.soup = BeautifulSoup(r.text, features="html.parser")
+        self.client=  MongoClient(MASTER_HOST, MASTER_DB)
+
 
     def beautiful(self):
         return self.soup.prettify()
@@ -73,21 +72,19 @@ class Crawler:
             else:
                 a.add(element)
 
+        database = self.client['dataset']
+        links_collection = database['links']
         for u in a:
-            client = MongoClient(MASTER_HOST, MASTER_DB)
-            database = client['dataset']
-            links_collection = database['links']
             if links_collection.count_documents({'url': u}, limit=1):
                 pass
             else:
                 obj = {"url": u, "crawled": False}
-                print('inserted', obj)
+                #print('inserted', obj)
                 links_collection.insert_one(obj)
 
     def update_current(self):
         to_find = self.url
-        client = MongoClient(MASTER_HOST, MASTER_DB)
-        database = client['dataset']
+        database = self.client['dataset']
         links_collection = database['links']
         myquery = {"url": to_find}
         newvalues = {"$set": {"crawled": True}}
@@ -119,8 +116,7 @@ class Crawler:
                     "id": self.id,
                 }
 
-                client = MongoClient(MASTER_HOST, MASTER_DB)
-                database = client['dataset']
+                database = self.client['dataset']
                 images_collection = None
 
                 if 'images' not in database.list_collection_names():

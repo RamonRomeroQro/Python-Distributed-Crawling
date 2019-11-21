@@ -19,22 +19,28 @@ SEEDS = set(settings['seeds'])
 def connect():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((MASTER_HOST, MASTER_PORT))
+        #Reciving Hear
+        d_url={}
         while True:
-            buf = b''
-            while len(buf) < 4:
-                buf += s.recv(4 - len(buf))
-            length = struct.unpack('!I', buf)[0]
-            data = s.recv(length)
-            data_arr = pickle.loads(data)
-            break
+            while True:
+                buf = b''
+                while len(buf) < 4:
+                    buf += s.recv(4 - len(buf))
+                length = struct.unpack('!I', buf)[0]
+                data = s.recv(length)
+                d_url = pickle.loads(data)
+                break
 
-        for i in data_arr:
 
-            print('crawling', i)
-            crawler_instance = Crawler(i, KWORDS, ID)
+            print(d_url)
+
+
+            #print('crawling', i)
+            crawler_instance = Crawler(d_url, KWORDS, ID)
             crawler_instance.inspect_images()
             crawler_instance.inspect_urls()
             crawler_instance.update_current()
+            crawler_instance.client.close()
 
 
 def main():
