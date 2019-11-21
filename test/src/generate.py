@@ -1,14 +1,17 @@
 import os
-
+import random
 def generate_html(list_tuples, dataset):
-    to_link=3
     current=0
     indexing=1
-    while indexing<len(list_tuples):
+    random.seed(5344)
+    random.shuffle(list_tuples)
+    while current<len(list_tuples):
         if current==0:
             nf=open('index.html', 'w')
         else:  
             nf=open(list_tuples[current][0], 'w')
+        to_link=random.randint(3,5)
+
         info=dataset[list_tuples[current][1]]
         block=info
         links=[]
@@ -29,6 +32,7 @@ def generate_html(list_tuples, dataset):
         <!doctype html>
         <html>
         <head>
+        <meta charset="UTF-8"/>
             <title>{list_tuples[current][3]}</title>
         </head>
         <body>
@@ -66,9 +70,9 @@ def main():
         while(i>=0):
             if name[i]=='_':
                 aux=name[:i]
-                # print('>>>', name)
-                # if aux=='Albrecht_Dürer':
-                #     n= 'Albrecht_Dürer'
+                #print('>>>', name)
+                # if aux=='Albrecht_Dürer':
+                #     n= 'Albrecht_Durer'
                 #     os.rename(im_folder+name,im_folder+n+name[i:])
                 title=name[:name.find('.')]
                 html_name=title+".html" #file to gen
@@ -76,7 +80,9 @@ def main():
                 uniques_images.add(aux)
                 break
             i-=1
+    #print('imx', len(images), len(all_names_html))
 
+    
     # print(uniques_images) 
     f=open("./artists.csv", 'r')
     classes=[]
