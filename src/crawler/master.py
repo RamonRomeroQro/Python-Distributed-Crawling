@@ -66,7 +66,6 @@ def main():
                 flat.append(e['url'])
 
         # traverse level
-        print("newLevel")
         while True:
             c = 0
             for x in flat:
@@ -77,6 +76,8 @@ def main():
                         c += 1
             if c == len(flat):
                 break
+        print("finshed level")
+
         my_socket.close()
         client.close()
     return 0
