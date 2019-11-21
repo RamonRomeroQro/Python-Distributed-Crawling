@@ -4,7 +4,7 @@ def generate_html(list_tuples, dataset):
     to_link=3
     current=0
     indexing=1
-    while indexing<len(list_tuples):
+    while current<len(list_tuples):
         if current==0:
             nf=open('index.html', 'w')
         else:  
@@ -29,6 +29,7 @@ def generate_html(list_tuples, dataset):
         <!doctype html>
         <html>
         <head>
+        <meta charset="UTF-8"/>
             <title>{list_tuples[current][3]}</title>
         </head>
         <body>
@@ -76,7 +77,9 @@ def main():
                 uniques_images.add(aux)
                 break
             i-=1
+    #print('imx', len(images), len(all_names_html))
 
+    
     # print(uniques_images) 
     f=open("./artists.csv", 'r')
     classes=[]
