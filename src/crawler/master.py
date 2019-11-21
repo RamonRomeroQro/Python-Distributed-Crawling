@@ -57,7 +57,7 @@ def main():
             packet = pickle.dumps(d_element)
             length = struct.pack('!I', len(packet))
             packet = length + packet
-            list_connections[i//len(list_connections)][0].sendall(packet)
+            list_connections[i%len(list_connections)][0].sendall(packet)
 
         #my_socket.close()
         
