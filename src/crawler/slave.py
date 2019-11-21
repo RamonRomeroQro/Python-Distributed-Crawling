@@ -20,6 +20,7 @@ def connect():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((MASTER_HOST, MASTER_PORT))
         #Reciving Hear
+        data_arr=[]
         while True:
             while True:
                 # buf = b''
@@ -28,7 +29,8 @@ def connect():
                 # length = struct.unpack('!I', buf)[0]
                 # data = s.recv(length)
                 data = s.recv(1024*2*2*2*2*2)
-                data_arr = pickle.loads(data)
+                unpickler=pickle.Unpickler(data)
+                data_arr = unpickler.load()
                 break
 
             print(data_arr)
