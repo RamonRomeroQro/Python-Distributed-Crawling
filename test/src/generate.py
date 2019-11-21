@@ -67,9 +67,9 @@ def main():
         while(i>=0):
             if name[i]=='_':
                 aux=name[:i]
-                # print('>>>', name)
-                # if aux=='Albrecht_Dürer':
-                #     n= 'Albrecht_Dürer'
+                #print('>>>', name)
+                # if aux=='Albrecht_Dürer':
+                #     n= 'Albrecht_Durer'
                 #     os.rename(im_folder+name,im_folder+n+name[i:])
                 title=name[:name.find('.')]
                 html_name=title+".html" #file to gen
