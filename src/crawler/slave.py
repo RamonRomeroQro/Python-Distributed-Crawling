@@ -30,6 +30,8 @@ def connect():
                 data_arr = pickle.loads(data)
                 break
 
+            print(data_arr)
+
             for i in data_arr:
 
                 print('crawling', i)
