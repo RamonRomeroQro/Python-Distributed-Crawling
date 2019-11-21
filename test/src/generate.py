@@ -1,14 +1,17 @@
 import os
-
+import random
 def generate_html(list_tuples, dataset):
-    to_link=3
     current=0
     indexing=1
+    random.seed(5344)
+    random.shuffle(list_tuples)
     while current<len(list_tuples):
         if current==0:
             nf=open('index.html', 'w')
         else:  
             nf=open(list_tuples[current][0], 'w')
+        to_link=random.randint(3,5)
+
         info=dataset[list_tuples[current][1]]
         block=info
         links=[]
