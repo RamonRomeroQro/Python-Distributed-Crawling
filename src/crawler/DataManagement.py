@@ -42,14 +42,13 @@ class DataManager():
 
     def get_crawlable(self):
         '''
-        get matrix of crawlables
+        get list of crawlables
 
         '''
         print('echo')
         myquery = {"crawled": False}
         to_split = self.client['dataset']['links'].find(myquery)
-        matrix_sendables = [[] for x in range(self.split_num)]
-        for index, dictionary in enumerate(to_split):
-            print(index, '>>', dictionary)
-            matrix_sendables[index % self.split_num].append(dictionary)
-        return matrix_sendables
+        l_sendables = []
+        for dictionary in to_split:
+            l_sendables.append(dictionary)
+        return l_sendables

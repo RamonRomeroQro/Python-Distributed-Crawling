@@ -52,29 +52,27 @@ def main():
 
         send_list = db.get_crawlable()
 
-        for j, pair in enumerate(list_connections):
-            pair[0].sendall(pickle.dumps(send_list[j]))
-            # packet = pickle.dumps(send_list[j])
-            # length = struct.pack('!I', len(packet))
-            # packet = length + packet
-            # pair[0].sendall(packet)
+    
+        for i, d_element in enumerate(send_list):
+            packet = pickle.dumps(d_element)
+            length = struct.pack('!I', len(packet))
+            packet = length + packet
+            list_connections[i//len(list_connections)][0].sendall(packet)
 
         #my_socket.close()
-        flat = []
-        for l in send_list:
-            for e in l:
-                flat.append(e['url'])
+        
 
         # traverse level
         while True:
             c = 0
-            for x in flat:
-                myquery = {"url": x}
+            for d_e in send_list:
+
+                myquery = {"url": d_e['url']}
                 r = links_collection.find(myquery)
                 for x in r:
                     if x['crawled'] == True:
                         c += 1
-            if c == len(flat):
+            if c == len(send_list):
                 break
         print("finshed level")
 
