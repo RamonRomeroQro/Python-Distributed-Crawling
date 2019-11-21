@@ -1,8 +1,8 @@
-import re
 from bs4 import BeautifulSoup
 from collections import deque
 import requests
 from pymongo import MongoClient
+import os
 
 import json
 # import re
@@ -136,6 +136,8 @@ class Crawler:
                     pass
                 else:
                     images_collection.insert_one(data_s)
+                    if not os.path.exists('./images/'):
+                        os.makedirs('./images/')
                     f = open('./images/'+self.id+"_"+filename, "wb")
                     print('retriving img...' + src)
                     f.write(requests.get(src).content)
