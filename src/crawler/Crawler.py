@@ -79,7 +79,7 @@ class Crawler:
                 pass
             else:
                 obj = {"url": u, "crawled": False}
-                print('inserted', obj)
+                #print('inserted', obj)
                 links_collection.insert_one(obj)
 
     def update_current(self):

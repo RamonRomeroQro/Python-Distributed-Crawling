@@ -27,7 +27,7 @@ def connect():
                 #     buf += s.recv(4 - len(buf))
                 # length = struct.unpack('!I', buf)[0]
                 # data = s.recv(length)
-                data = s.recv(1024*2*2*2)
+                data = s.recv(1024*2*2*2*2*2)
                 data_arr = pickle.loads(data)
                 break
 
@@ -35,7 +35,7 @@ def connect():
 
             for i in data_arr:
 
-                print('crawling', i)
+                #print('crawling', i)
                 crawler_instance = Crawler(i, KWORDS, ID)
                 crawler_instance.inspect_images()
                 crawler_instance.inspect_urls()
