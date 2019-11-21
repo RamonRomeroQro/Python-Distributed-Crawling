@@ -89,8 +89,8 @@ def main():
             else:
                 a.add(element)
 
-        print('AAA>>', a)
-        print('AAA>>', base)
+        # print('AAA>>', a)
+        # print('AAA>>', base)
 
         for u in a:
             if u not in visited:
