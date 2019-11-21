@@ -53,10 +53,11 @@ def main():
         send_list = db.get_crawlable()
 
         for j, pair in enumerate(list_connections):
-            packet = pickle.dumps(send_list[j])
-            length = struct.pack('!I', len(packet))
-            packet = length + packet
-            pair[0].sendall(packet)
+            pair[0].sendall(pickle.dumps(send_list[j]))
+            # packet = pickle.dumps(send_list[j])
+            # length = struct.pack('!I', len(packet))
+            # packet = length + packet
+            # pair[0].sendall(packet)
 
         #my_socket.close()
         flat = []

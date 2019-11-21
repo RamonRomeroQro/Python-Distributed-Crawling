@@ -22,11 +22,12 @@ def connect():
         #Reciving Hear
         while True:
             while True:
-                buf = b''
-                while len(buf) < 4:
-                    buf += s.recv(4 - len(buf))
-                length = struct.unpack('!I', buf)[0]
-                data = s.recv(length)
+                # buf = b''
+                # while len(buf) < 4:
+                #     buf += s.recv(4 - len(buf))
+                # length = struct.unpack('!I', buf)[0]
+                # data = s.recv(length)
+                data = s.recv(1024*2*2*2)
                 data_arr = pickle.loads(data)
                 break
 
