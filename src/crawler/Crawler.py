@@ -104,7 +104,7 @@ class Crawler:
             try:
                 altern = str(image['alt']).lower()
             except:
-                altern = None
+                altern = [None]
             for kw in self.kwords:
                 if kw in arround or kw in filename or kw in altern:
                     final_tags.append(kw)
