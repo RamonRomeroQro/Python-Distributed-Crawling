@@ -94,7 +94,7 @@ def main():
 
         for u in a:
             if u not in visited:
-                print("Inserted "+ u)
+                #print("Inserted "+ u)
                 q.append(u)
 
 
