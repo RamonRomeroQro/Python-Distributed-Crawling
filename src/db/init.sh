@@ -1,4 +1,4 @@
-# sudo mkdir /data
+sudo mkdir /data
 
-# sudo mkdir /data/db
-mongod --bind_ip 0.0.0.0 --port 7050
+sudo mkdir /data/db
+sudo mongod --dbpath . --bind_ip 0.0.0.0 --port 7050
