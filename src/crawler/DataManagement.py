@@ -45,7 +45,6 @@ class DataManager():
         get list of crawlables
 
         '''
-        print('echo')
         myquery = {"crawled": False}
         to_split = self.client['dataset']['links'].find(myquery)
         l_sendables = []
