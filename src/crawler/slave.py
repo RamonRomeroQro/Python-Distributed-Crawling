@@ -32,7 +32,6 @@ def connect():
                 break
 
 
-            print(d_url)
 
 
             #print('crawling', i)
