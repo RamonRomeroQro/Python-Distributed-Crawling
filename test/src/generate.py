@@ -3,15 +3,16 @@ import random
 
 
 def generate_html(list_tuples, dataset):
+    rel_app="./app/"
     current = 0
     indexing = 1
     random.seed(5344)
     random.shuffle(list_tuples)
     while current < len(list_tuples):
         if current == 0:
-            nf = open('index.html', 'w')
+            nf = open(rel_app+'index.html', 'w')
         else:
-            nf = open(list_tuples[current][0], 'w')
+            nf = open(rel_app+list_tuples[current][0], 'w')
         to_link = random.randint(3, 5)
 
         info = dataset[list_tuples[current][1]]
@@ -62,7 +63,8 @@ def generate_html(list_tuples, dataset):
 
 
 def main():
-    im_folder = "./images/"
+    im_folder = "./app/images/"
+    relative_to_app="./images/"
     images = os.listdir(im_folder)
     uniques_images = set()
     all_names_html = []
@@ -78,7 +80,8 @@ def main():
                 #     os.rename(im_folder+name,im_folder+n+name[i:])
                 title = name[:name.find('.')]
                 html_name = title+".html"  # file to gen
-                all_names_html.append((html_name, aux, im_folder+name, title))
+                #html_name, artistname, im_folder+name, title
+                all_names_html.append((html_name, aux, relative_to_app+name, title))
                 uniques_images.add(aux)
                 break
             i -= 1
