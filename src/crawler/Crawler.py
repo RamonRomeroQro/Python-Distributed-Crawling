@@ -10,7 +10,7 @@ f = open('./../settings.json')
 settings = json.load(f)
 f.close()
 
-NUM_SLAVES = len(settings['slaves'])
+NUM_SLAVES = settings['slaves']
 MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
 MASTER_PORT = settings['master']['port']        # The port used by the server
 MASTER_DB = settings['master']['db']        # The port used by the server
@@ -132,9 +132,10 @@ class Crawler:
                     pass
                 else:
                     images_collection.insert_one(data_s)
-                    if not os.path.exists('./images/'):
-                        os.makedirs('./images/')
-                    f = open('./images/'+self.id+"_"+filename, "wb")
-                    print('retriving img...' + src)
-                    f.write(requests.get(src).content)
-                    f.close()
+                    # if not os.path.exists('./images/'):
+                    #     os.makedirs('./images/')
+                    # f = open('./images/'+self.id+"_"+filename, "wb")
+                    # print('retriving img...' + src)
+                    # f.write(requests.get(src).content)
+                    # f.close()
+                    pass

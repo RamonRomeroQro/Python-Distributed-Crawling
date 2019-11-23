@@ -10,7 +10,7 @@ f = open('./../settings.json')
 settings = json.load(f)
 f.close()
 
-NUM_SLAVES = len(settings['slaves'])
+NUM_SLAVES = settings['slaves']
 MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
 MASTER_PORT = settings['master']['port']        # The port used by the server
 MASTER_DB = settings['master']['db']        # The port used by the server
@@ -52,8 +52,9 @@ def main():
 
         send_list = db.get_crawlable()
 
-    
+        # previouses=["" for x in range(len(list_connections))]
         for i, d_element in enumerate(send_list):
+            # previous[i%len(list_connections]=
             packet = pickle.dumps(d_element)
             length = struct.pack('!I', len(packet))
             packet = length + packet
