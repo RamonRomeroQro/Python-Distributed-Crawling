@@ -29,9 +29,6 @@ def g_base(url):
 
 
 def main():
-    images_db = {}
-    visited = set()
-    id_v = 'single'
     client = MongoClient(MASTER_HOST, MASTER_DB)
     database = None
     links_collection = None
@@ -53,7 +50,7 @@ def main():
         try:
             links_collection.insert_one(obj)
         except Exception as e:
-            print("seeds duplicadas, continuando amplitud")
+            print(e)
             pass
 
     while links_collection.count_documents({'crawled': False}, limit=1):
@@ -114,7 +111,7 @@ def main():
                     if images_collection.count_documents({'url': src}, limit=1):
                         pass
                     else:
-                        # images_collection.insert_one(data_s)
+                        images_collection.insert_one(data_s)
                         # if not os.path.exists('./images/'):
                         #     os.makedirs('./images/')
                         # f = open('./images/'+"single"+"_"+filename, "wb")

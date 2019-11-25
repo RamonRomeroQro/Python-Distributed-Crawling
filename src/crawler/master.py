@@ -39,7 +39,7 @@ def main():
     try:
         db.add_seeds(SEEDS)
     except Exception as e:
-        print("seeds duplicadas, continuando amplitud")
+        print(e)
 
     # while crawlables
     client = db.client
