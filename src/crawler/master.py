@@ -16,6 +16,7 @@ MASTER_PORT = settings['master']['port']        # The port used by the server
 MASTER_DB = settings['master']['db']        # The port used by the server
 KWORDS = set(settings['kwords'])
 SEEDS = set(settings['seeds'])
+MXDEPTH= settings['depth']
 
 
 def main():
@@ -45,6 +46,8 @@ def main():
     client = db.client
     database = client['dataset']
     links_collection = database['links']
+
+    current_level=0
 
 
     while links_collection.count_documents({ 'crawled': False }, limit = 1):
@@ -76,9 +79,12 @@ def main():
             if c == len(send_list):
                 break
         print("finshed level")
+        current_level+=1
+        if current_level==MXDEPTH:
+            break
 
-        my_socket.close()
-        client.close()
+    my_socket.close()
+    client.close()
     return 0
 
 
