@@ -42,19 +42,19 @@ class Crawler:
                 return i
         return len(self.url)
 
-    def bfs(self):
-        queue = deque([self.soup])  # queue of (path, element) pairs
-        while queue:
-            l = len(queue)
-            lev = []
-            for i in range(l):
-                element = queue.popleft()
-                lev.append(type(element))
-                if hasattr(element, 'children'):  # check for leaf elements
-                    for child in element.children:
-                        queue.append(child)
-            print(lev)
-            # do stuff
+    # def bfs(self):
+    #     queue = deque([self.soup])  # queue of (path, element) pairs
+    #     while queue:
+    #         l = len(queue)
+    #         lev = []
+    #         for i in range(l):
+    #             element = queue.popleft()
+    #             lev.append(type(element))
+    #             if hasattr(element, 'children'):  # check for leaf elements
+    #                 for child in element.children:
+    #                     queue.append(child)
+    #         print(lev)
+    #         # do stuff
 
     def get_nodes_to_eval(self, l):
         return self.soup.find_all(l)

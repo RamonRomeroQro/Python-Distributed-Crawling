@@ -1,10 +1,6 @@
 {
-
-
-
     "seeds": [
-        "http://192.168.100.47:8001",
-        "http://192.168.100.47:8002"
+        "http://artists.com",
     ],
     "kwords": [
         "mexican"
@@ -15,5 +11,8 @@
         "db": 7050,
         "id": "master"
     },
-    "slaves": 6
+    "slaves": 6,
+    "depth": 10
 }
+
+
