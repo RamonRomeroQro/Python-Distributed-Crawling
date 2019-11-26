@@ -17,6 +17,7 @@ MASTER_DB = settings['master']['db']        # The port used by the server
 KWORDS = set(settings['kwords'])
 SEEDS = set(settings['seeds'])
 MXDEPTH= settings['depth']
+DOWNLOAD = settings['force_downlooad']
 
 
 def main():

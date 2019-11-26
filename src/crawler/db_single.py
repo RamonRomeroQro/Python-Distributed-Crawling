@@ -17,6 +17,7 @@ MASTER_DB = settings['master']['db']        # The port used by the server
 KWORDS = set(settings['kwords'])
 SEEDS = list(set(settings['seeds']))
 MXDEPTH= settings['depth']
+DOWNLOAD = settings['force_downlooad']
 
 
 def g_base(url):
@@ -115,12 +116,13 @@ def main():
                         pass
                     else:
                         images_collection.insert_one(data_s)
-                        # if not os.path.exists('./images/'):
-                        #     os.makedirs('./images/')
-                        # f = open('./images/'+"single"+"_"+filename, "wb")
-                        # print('retriving img...' + src)
-                        # f.write(requests.get(src).content)
-                        # f.close()
+                        if DOWNLOAD:
+                            if not os.path.exists('./images/'):
+                                os.makedirs('./images/')
+                            f = open('./images/'+"single"+"_"+filename, "wb")
+                            print('retriving img...' + src)
+                            f.write(requests.get(src).content)
+                            f.close()
                         pass
 
             #########

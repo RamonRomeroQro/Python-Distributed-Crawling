@@ -13,6 +13,7 @@ MASTER_HOST = settings['master']['ip']  # The server's hostname or IP address
 MASTER_PORT = settings['master']['port']        # The port used by the server
 KWORDS = set(settings['kwords'])
 SEEDS = set(settings['seeds'])
+DOWNLOAD = settings['force_downlooad']
 
 
 def connect():

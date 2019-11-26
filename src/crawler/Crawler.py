@@ -16,6 +16,7 @@ MASTER_PORT = settings['master']['port']        # The port used by the server
 MASTER_DB = settings['master']['db']        # The port used by the server
 KWORDS = set(settings['kwords'])
 SEEDS = set(settings['seeds'])
+DOWNLOAD = settings['force_downlooad']
 
 
 class Crawler:
@@ -132,10 +133,12 @@ class Crawler:
                     pass
                 else:
                     images_collection.insert_one(data_s)
-                    # if not os.path.exists('./images/'):
-                    #     os.makedirs('./images/')
-                    # f = open('./images/'+self.id+"_"+filename, "wb")
-                    # print('retriving img...' + src)
-                    # f.write(requests.get(src).content)
-                    # f.close()
+                    if DOWNLOAD:
+                        dir_down= './images'+self.id+'/'
+                        if not os.path.exists(dir_down):
+                            os.makedirs(dir_down)
+                        f = open(dir_down+self.id+"_"+filename, "wb")
+                        print('retriving img...' + src)
+                        f.write(requests.get(src).content)
+                        f.close()
                     pass

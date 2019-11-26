@@ -1,6 +1,6 @@
 {
     "seeds": [
-        "http://artists.com"
+        "http://0.0.0.0:8000"
     ],
     "kwords": [
         "mexican"
@@ -12,7 +12,8 @@
         "id": "master"
     },
     "slaves": 6,
-    "depth": 10
+    "depth": 10,
+    "force_downlooad":true
 }
 
 
