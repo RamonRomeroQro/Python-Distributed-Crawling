@@ -1,6 +1,7 @@
 
 db/*
 src/db/data/*
+src/crawler/images*
 
 .vscode/*
 .vscode/
