@@ -44,7 +44,7 @@ $ pip install -r requirements.txt
 
 ## Demo
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/DuDJwQcMdAw/0.jpg)](http://www.youtube.com/watch?v=DuDJwQcMdAw)
+[![DEMO](http://img.youtube.com/vi/DuDJwQcMdAw/0.jpg)](http://www.youtube.com/watch?v=DuDJwQcMdAw)
 
 ## Servicios de prueba
 
