@@ -1,5 +1,7 @@
 # Distributed WebScrapping
 
+https://github.com/RamonRomeroQro/Python-Distributed-Scrapping
+
 ```
 
 Copyright 2019 
@@ -21,9 +23,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ## SetUp
 
 + Descargar desde páginas Oficiales: 
-   - Python3
-   - MongoDB
 
+   - Python3, https://www.python.org/downloads/
+   - MongoDB, https://www.mongodb.com/download-center
 
 + Crear ambiente virtual
 ```
